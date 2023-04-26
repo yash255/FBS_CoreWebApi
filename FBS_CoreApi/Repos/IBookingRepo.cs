@@ -60,7 +60,7 @@ namespace FBS_CoreApi.Repositories
             await _context.SaveChangesAsync();
 
             // Send confirmation email to user
-            await SendConfirmationEmailAsync(flight, booking, totalPrice, "yashkhandelwalseb25@gmail.com");
+            await SendConfirmationEmailAsync(flight, booking, totalPrice, "");
 
             return new BookFlightResult(true, "");
         }
@@ -100,8 +100,8 @@ namespace FBS_CoreApi.Repositories
             {
                 var credential = new NetworkCredential
                 {
-                    UserName = "yashkhandelwalseb25@gmail.com",
-                    Password = "ghmpgskodllxupcd"
+                    UserName = "",
+                    Password = ""
                 };
                 smtp.UseDefaultCredentials = false;
 
