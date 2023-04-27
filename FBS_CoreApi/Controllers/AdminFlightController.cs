@@ -43,7 +43,7 @@ namespace FlightBooking.Controllers
         public async Task<ActionResult<Flight>> CreateFlight(AdminFlightDto flightDto)
         {
             var flight = await _adminRepo.CreateFlight(flightDto);
-            return CreatedAtAction(nameof(GetFlightByNumber), new { id = flight.Id }, flight);
+            return Ok(flight);
         }
 
         [HttpPut("flights/{id}")]
