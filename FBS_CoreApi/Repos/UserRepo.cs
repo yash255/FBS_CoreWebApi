@@ -41,8 +41,8 @@ namespace FBS_CoreApi.Repositories
 
             var userWithBookingsDto = new UserWithBookingsDto
             {
-                UserId = user.Id,
-                UserName = user.UserName,
+           //     UserId = user.Id,
+            //    UserName = user.UserName,
                 Email = user.Email,
                 Bookings = _context.Bookings
                     .Where(b => b.UserId == userId)
