@@ -18,7 +18,7 @@ namespace FBS_CoreApi.Controllers
             _bookingRepo = bookingRepo;
         }
 
-        [HttpPost]
+        [HttpPost("{flightId}")]
         [Authorize] // Require authentication for this action
         public async Task<IActionResult> BookFlight(int flightId, BookingDTO booking)
         {
