@@ -6,7 +6,6 @@ using FBS_CoreApi.DTOs;
 using FBS_CoreApi.Models;
 using FBS_CoreApi.Data;
 using static FBS_CoreApi.Repositories.BookingRepository;
-using Microsoft.AspNetCore.Identity;
 
 
 namespace FBS_CoreApi.Repositories
