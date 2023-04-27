@@ -19,7 +19,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IAdminRepo, AdminRepository>();
 builder.Services.AddScoped<ISearchRepo, SearchRepo>();
 builder.Services.AddScoped<IBookingRepo, BookingRepository>();
-builder.Services.AddScoped<IUserRepo,UserRepo>();
+builder.Services.AddScoped<IUserRepo, UserRepo>();
 
 builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(configuration.GetConnectionString("connMSSQL")));
 
@@ -48,7 +48,7 @@ builder.Services.AddAuthentication(options =>
             IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["JWT:Secret"])),
             NameClaimType = ClaimTypes.Name,
             RoleClaimType = ClaimTypes.Role,
-           
+
         };
     });
 
