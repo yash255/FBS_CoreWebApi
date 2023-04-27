@@ -35,6 +35,11 @@ namespace FBS_CoreApi.Repositories
                 return new BookFlightResult(false, "Invalid flight ID");
             }
 
+            if (booking.NoOfTicket < 1)
+            {
+                return new BookFlightResult(false, "Number of tickets must be at least 1");
+            }
+
             // Calculate total price based on the number of tickets and flight price
             decimal totalPrice = flight.Price * booking.NoOfTicket;
 
