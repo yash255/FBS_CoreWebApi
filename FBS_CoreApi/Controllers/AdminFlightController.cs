@@ -28,10 +28,10 @@ namespace FlightBooking.Controllers
             return Ok(flights);
         }
 
-        [HttpGet("flights/{id}")]
-        public async Task<ActionResult<Flight>> GetFlightById(int id)
+        [HttpGet("flights/{number}")]
+        public async Task<ActionResult<Flight>> GetFlightByNumber(string number)
         {
-            var flight = await _adminRepo.GetFlightById(id);
+            var flight = await _adminRepo.GetFlightByNumber(number);
             if (flight == null)
             {
                 return NotFound();
@@ -43,7 +43,7 @@ namespace FlightBooking.Controllers
         public async Task<ActionResult<Flight>> CreateFlight(AdminFlightDto flightDto)
         {
             var flight = await _adminRepo.CreateFlight(flightDto);
-            return CreatedAtAction(nameof(GetFlightById), new { id = flight.Id }, flight);
+            return CreatedAtAction(nameof(GetFlightByNumber), new { id = flight.Id }, flight);
         }
 
         [HttpPut("flights/{id}")]

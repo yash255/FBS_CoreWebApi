@@ -13,8 +13,7 @@ namespace FlightBooking.Repos
 
         Task<IEnumerable<Flight>> GetFlights();
 
-        Task<Flight> GetFlightById(int id);
-
+        Task<Flight> GetFlightByNumber(string number);
         Task<Flight> CreateFlight(AdminFlightDto flightDto);
 
         Task UpdateFlight(int id, AdminFlightDto flightDto);
@@ -50,12 +49,9 @@ namespace FlightBooking.Repos
 
 
 
-        public async Task<Flight> GetFlightById(int id)
+        public async Task<Flight> GetFlightByNumber(string number)
         {
-
-            return await _context.Flights.FindAsync(id);
-
-            // return await _context.Flights.FindAsync(id);
+            return await _context.Flights.FirstOrDefaultAsync(f => f.FlightNumber == number);
         }
 
         public async Task<Flight> CreateFlight(AdminFlightDto flightDto)
