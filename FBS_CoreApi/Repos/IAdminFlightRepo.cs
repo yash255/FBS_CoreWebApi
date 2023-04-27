@@ -56,6 +56,11 @@ namespace FlightBooking.Repos
 
         public async Task<Flight> CreateFlight(AdminFlightDto flightDto)
         {
+            var existingFlight = await _context.Flights.FirstOrDefaultAsync(f => f.FlightNumber == flightDto.FlightNumber);
+            if (existingFlight != null)
+            {
+                throw new ArgumentException("A flight with this number already exists\n\n");
+            }
             var flight = new Flight
             {
                 FlightNumber = flightDto.FlightNumber,
