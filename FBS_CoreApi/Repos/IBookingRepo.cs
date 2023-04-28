@@ -6,7 +6,7 @@ using FBS_CoreApi.DTOs;
 using FBS_CoreApi.Models;
 using FBS_CoreApi.Data;
 using static FBS_CoreApi.Repositories.BookingRepository;
-
+using System.Text;
 
 namespace FBS_CoreApi.Repositories
 {
@@ -96,8 +96,24 @@ namespace FBS_CoreApi.Repositories
             var message = new MailMessage();
             message.To.Add(new MailAddress(booking.Email));
             message.Subject = "Flight Booking Confirmation";
-            message.Body = $"Dear {booking.PassengerName},\n\nThank you for booking your flight with us. Your booking details are as follows:\n\nFlight: {flight.FlightNumber}\nDate: {flight.DepartureTime}\nPassenger Name: {booking.PassengerName}\nNumber of Tickets: {booking.NoOfTicket}\nTotal Price: {totalPrice}\n\nPlease do not hesitate to contact us if you have any questions or concerns.\n\nSincerely,\nThe Flight Booking Team";
+            var bodyBuilder = new StringBuilder();
+            bodyBuilder.Append("<html><body>");
+            bodyBuilder.Append($"<h2>Dear {booking.PassengerName},</h2>");
+            bodyBuilder.Append("<p>Thank you for booking your flight with us. Your booking details are as follows:</p>");
+            bodyBuilder.Append("<table border='1' cellpadding='10'><tbody>");
+            bodyBuilder.Append($"<tr><td><b>Flight:</b></td><td>{flight.FlightNumber}</td></tr>");
+            bodyBuilder.Append($"<tr><td><b>Date:</b></td><td>{flight.DepartureTime}</td></tr>");
+            bodyBuilder.Append($"<tr><td><b>Passenger Name:</b></td><td>{booking.PassengerName}</td></tr>");
+            bodyBuilder.Append($"<tr><td><b>Number of Tickets:</b></td><td>{booking.NoOfTicket}</td></tr>");
+            bodyBuilder.Append($"<tr><td><b>Total Price:</b></td><td>{totalPrice}</td></tr>");
+            bodyBuilder.Append("</tbody></table>");
 
+            bodyBuilder.Append("<p>Please do not hesitate to contact us if you have any questions or concerns.</p>");
+            bodyBuilder.Append("<p>Sincerely,<br>The Flight Booking Team</p>");
+            bodyBuilder.Append("</body></html>");
+
+            message.IsBodyHtml = true;
+            message.Body = bodyBuilder.ToString();
             message.From = new MailAddress(fromEmail);
 
             using (var smtp = new SmtpClient())
