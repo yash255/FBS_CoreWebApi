@@ -91,10 +91,10 @@ using (var scope = app.Services.CreateScope())
     }
 
     // Check if an admin user exists in the database
-    var adminUser = await userManager.Users.FirstOrDefaultAsync(u => u.Email == "admin@example.com");
+    var adminUser = await userManager.Users.FirstOrDefaultAsync(u => u.Email == "admin@gmail.com");
     if (adminUser == null)
     {
-        // Create a new admin user and add them to the "Admin" role
+        //if not create one
         var newAdminUser = new ApplicationUser
         {
             Email = "admin@gmail.com",
