@@ -14,6 +14,10 @@ namespace FlightBooking.DTOs
         public DateTime DepartureTime { get; set; }
         [Required]
         public DateTime ArrivalTime { get; set; }
+
+        [Required]
+        public int NoOfSeatsAvailable { get; set; }
+
         [Required]
         public decimal Price { get; set; }
     }

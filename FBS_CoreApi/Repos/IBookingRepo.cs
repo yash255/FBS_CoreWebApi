@@ -39,6 +39,11 @@ namespace FBS_CoreApi.Repositories
             {
                 return new BookFlightResult(false, "Number of tickets must be at least 1");
             }
+            int availableSeats = flight.NoOfSeatsAvailable - await _context.Bookings.Where(b => b.FlightId == flight.Id).SumAsync(b => b.NoOfTicket);
+            if (booking.NoOfTicket > availableSeats)
+            {
+                return new BookFlightResult(false, $"Only {availableSeats} seats are available in this flight");
+            }
 
             // Calculate total price based on the number of tickets and flight price
             decimal totalPrice = flight.Price * booking.NoOfTicket;
@@ -58,6 +63,8 @@ namespace FBS_CoreApi.Repositories
                 FlightId = flight.Id,
                 UserId = userId
             };
+
+            flight.NoOfSeatsAvailable -= booking.NoOfTicket;
 
             // Add the new booking to the database
             _context.Bookings.Add(newBooking);
@@ -121,7 +128,7 @@ namespace FBS_CoreApi.Repositories
                 var credential = new NetworkCredential
                 {
                     UserName = "yashkhandelwalseb25@gmail.com",
-                    Password = "ghmpgskodllxupcd"
+                    Password = "jtoofeqwycubfygg"
                 };
                 smtp.UseDefaultCredentials = false;
 

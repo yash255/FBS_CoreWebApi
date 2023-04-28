@@ -76,6 +76,10 @@ namespace FlightBooking.Repos
             {
                 throw new ArgumentException("Error! Price cannot be less than or equal to zero.\n\n");
             }
+            if (flightDto.NoOfSeatsAvailable <= 0)
+            {
+                throw new ArgumentException("Error! Number of seats cannot be less than 1.\n\n");
+            }
 
             var flight = new Flight
             {
@@ -85,6 +89,7 @@ namespace FlightBooking.Repos
                 DepartureTime = flightDto.DepartureTime,
                 ArrivalTime = flightDto.ArrivalTime,
                 Price = flightDto.Price,
+                NoOfSeatsAvailable=flightDto.NoOfSeatsAvailable,
 
             };
 
