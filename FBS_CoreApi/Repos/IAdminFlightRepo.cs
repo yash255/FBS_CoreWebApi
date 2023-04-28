@@ -61,6 +61,17 @@ namespace FlightBooking.Repos
             {
                 throw new ArgumentException("A flight with this number already exists\n\n");
             }
+
+            if (flightDto.DepartureTime < DateTime.Now)
+            {
+                throw new ArgumentException("Error! Departure time cannot be in the past.\n\n");
+            }
+
+            if (flightDto.ArrivalTime < flightDto.DepartureTime)
+            {
+                throw new ArgumentException("Error! Arrival time cannot be before departure time.\n\n");
+            }
+
             var flight = new Flight
             {
                 FlightNumber = flightDto.FlightNumber,
@@ -86,6 +97,16 @@ namespace FlightBooking.Repos
             if (flight == null)
             {
                 throw new ArgumentException("Flight not found");
+            }
+
+            if (flightDto.DepartureTime < DateTime.Now)
+            {
+                throw new ArgumentException("Error! Departure time cannot be in the past.\n\n");
+            }
+
+            if (flightDto.ArrivalTime < flightDto.DepartureTime)
+            {
+                throw new ArgumentException("Error! Arrival time cannot be before departure time.\n\n");
             }
 
             flight.FlightNumber = flightDto.FlightNumber;
