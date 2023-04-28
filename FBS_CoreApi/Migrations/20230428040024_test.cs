@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace FBS_CoreApi.Migrations
 {
     /// <inheritdoc />
-    public partial class AdminAdded : Migration
+    public partial class test : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -188,11 +188,18 @@ namespace FBS_CoreApi.Migrations
                     CabinClass = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     NoOfTicket = table.Column<int>(type: "int", nullable: false),
                     TotalPrice = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    FlightId = table.Column<int>(type: "int", nullable: false)
+                    FlightId = table.Column<int>(type: "int", nullable: false),
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Bookings", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Bookings_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Bookings_Flights_FlightId",
                         column: x => x.FlightId,
@@ -244,6 +251,11 @@ namespace FBS_CoreApi.Migrations
                 name: "IX_Bookings_FlightId",
                 table: "Bookings",
                 column: "FlightId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Bookings_UserId",
+                table: "Bookings",
+                column: "UserId");
         }
 
         /// <inheritdoc />

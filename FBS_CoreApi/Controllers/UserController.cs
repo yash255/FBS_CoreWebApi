@@ -25,7 +25,14 @@ namespace FBS_CoreApi.Controllers
             }
             catch (UnauthorizedAccessException ex)
             {
-                return StatusCode(403, new { Message = ex.Message });
+                if (ex.Message == "Please login and register.")
+                {
+                    return Unauthorized(new { Message = ex.Message });
+                }
+                else
+                {
+                    return StatusCode(403, new { Message = ex.Message });
+                }
             }
         }
     }

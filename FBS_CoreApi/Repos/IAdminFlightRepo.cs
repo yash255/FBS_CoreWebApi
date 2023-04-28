@@ -72,6 +72,11 @@ namespace FlightBooking.Repos
                 throw new ArgumentException("Error! Arrival time cannot be before departure time.\n\n");
             }
 
+            if (flightDto.Price <= 0)
+            {
+                throw new ArgumentException("Error! Price cannot be less than or equal to zero.\n\n");
+            }
+
             var flight = new Flight
             {
                 FlightNumber = flightDto.FlightNumber,
@@ -107,6 +112,11 @@ namespace FlightBooking.Repos
             if (flightDto.ArrivalTime < flightDto.DepartureTime)
             {
                 throw new ArgumentException("Error! Arrival time cannot be before departure time.\n\n");
+            }
+
+            if (flightDto.Price <=0)
+            {
+                throw new ArgumentException("Error! Price cannot be less than or equal to zero.\n\n");
             }
 
             flight.FlightNumber = flightDto.FlightNumber;

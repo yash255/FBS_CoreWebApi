@@ -25,41 +25,55 @@ namespace FBS_CoreApi.Repositories
 
         public UserWithBookingsDto GetUserWithBookings(string userId)
         {
-            var authenticatedUserId = _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
-
-            if (authenticatedUserId != userId)
+            try
             {
-                throw new UnauthorizedAccessException("You do not have permission to access this resource.");
+                var authenticatedUserId = _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+
+                if (authenticatedUserId != userId)
+                {
+                    throw new UnauthorizedAccessException("You do not have permission to access this resource.");
+                }
+
+                if (authenticatedUserId == null)
+                {
+                    throw new UnauthorizedAccessException("Please login or register.");
+                }
+
+                var user = _context.Users.FirstOrDefault(u => u.Id == userId);
+
+                if (user == null)
+                {
+                    return null;
+                }
+
+
+                var userWithBookingsDto = new UserWithBookingsDto
+                {
+                    //     UserId = user.Id,
+                    //    UserName = user.UserName,
+                    Email = user.Email,
+                    Bookings = _context.Bookings
+                        .Where(b => b.UserId == userId)
+                        .Select(b => new BookingDTO
+                        {
+                            PassengerName = b.PassengerName,
+                            Email = b.Email,
+                            PhoneNumber = b.PhoneNumber,
+                            Age = b.Age,
+                            Gender = b.Gender,
+                            CabinClass = b.CabinClass,
+                            NoOfTicket = b.NoOfTicket
+                        })
+                        .ToList()
+                };
+
+                return userWithBookingsDto;
             }
-
-            var user = _context.Users.FirstOrDefault(u => u.Id == userId);
-
-            if (user == null)
+            catch (Exception ex)
             {
-                return null;
+                throw new UnauthorizedAccessException("An error occurred while processing your request. Please try again later.");
+
             }
-
-            var userWithBookingsDto = new UserWithBookingsDto
-            {
-           //     UserId = user.Id,
-            //    UserName = user.UserName,
-                Email = user.Email,
-                Bookings = _context.Bookings
-                    .Where(b => b.UserId == userId)
-                    .Select(b => new BookingDTO
-                    {
-                        PassengerName = b.PassengerName,
-                        Email = b.Email,
-                        PhoneNumber = b.PhoneNumber,
-                        Age = b.Age,
-                        Gender = b.Gender,
-                        CabinClass = b.CabinClass,
-                        NoOfTicket = b.NoOfTicket
-                    })
-                    .ToList()
-            };
-
-            return userWithBookingsDto;
         }
     }
 }

@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FBS_CoreApi.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230426152533_BookingUpdate")]
-    partial class BookingUpdate
+    [Migration("20230428040024_test")]
+    partial class test
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -313,7 +313,7 @@ namespace FBS_CoreApi.Migrations
             modelBuilder.Entity("FBS_CoreApi.Models.Booking", b =>
                 {
                     b.HasOne("FlightBooking.Models.Flight", "Flight")
-                        .WithMany("Bookings")
+                        .WithMany()
                         .HasForeignKey("FlightId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -378,11 +378,6 @@ namespace FBS_CoreApi.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("FlightBooking.Models.Flight", b =>
-                {
-                    b.Navigation("Bookings");
                 });
 #pragma warning restore 612, 618
         }

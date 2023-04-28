@@ -97,10 +97,10 @@ using (var scope = app.Services.CreateScope())
         // Create a new admin user and add them to the "Admin" role
         var newAdminUser = new ApplicationUser
         {
-            Email = "admin@example.com",
-            UserName = "admin@example.com"
+            Email = "admin@gmail.com",
+            UserName = "admin@gmail.com"
         };
-        var result = await userManager.CreateAsync(newAdminUser, "Password@123");
+        var result = await userManager.CreateAsync(newAdminUser, "Admin@123");
         if (result.Succeeded)
         {
             await userManager.AddToRoleAsync(newAdminUser, "Admin");
