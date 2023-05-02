@@ -117,7 +117,7 @@ namespace FBS_CoreApi.Repositories
 
             // Send cancellation confirmation email to user
 
-            return new CancelBookingResult(true, "yashkhandelwalseb25@gmail.com");
+            return new CancelBookingResult(true, "");
         }
 
         private async Task SendConfirmationEmailAsync(Flight flight, BookingDTO booking, decimal totalPrice, string fromEmail)
@@ -149,7 +149,7 @@ namespace FBS_CoreApi.Repositories
             {
                 var credential = new NetworkCredential
                 {
-                    UserName = "yashkhandelwalseb25@gmail.com",
+                    UserName = "",
                     Password = ""
                 };
                 smtp.UseDefaultCredentials = false;
