@@ -1,5 +1,5 @@
-﻿using FlightBooking.DTOs;
-using FlightBooking.Models;
+﻿using FBS_CoreApi.DTOs;
+using FlightBooking.DTOs;
 using FlightBooking.Repos;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -40,7 +40,7 @@ namespace FlightBooking.Controllers
         }
 
         [HttpPost("flights")]
-        public async Task<ActionResult<Flight>> CreateFlight(AdminFlightDto flightDto)
+        public async Task<ActionResult<Flight>> CreateFlight(FlightDto flightDto)
         {
             var flight = await _adminRepo.CreateFlight(flightDto);
             return Ok(flight);

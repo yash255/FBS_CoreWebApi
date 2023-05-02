@@ -1,5 +1,4 @@
 ﻿using FBS_CoreApi.Models;
-using FlightBooking.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
@@ -13,6 +12,7 @@ namespace FBS_CoreApi.Data
 
         public DbSet<Flight> Flights { get; set; }
         public DbSet<Booking> Bookings { get; set; }
+        public DbSet<CabinClass> Cabins { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

@@ -2,6 +2,7 @@
 using FBS_CoreApi.DTOs;
 using FBS_CoreApi.Models;
 using Microsoft.AspNetCore.Http;
+using System;
 using System.Linq;
 using System.Security.Claims;
 
@@ -9,7 +10,7 @@ namespace FBS_CoreApi.Repositories
 {
     public interface IUserRepo
     {
-        UserWithBookingsDto GetUserWithBookings(string userId);
+        UserWithBookingsDto GetUserWithBookings();
     }
 
     public class UserRepo : IUserRepo
@@ -23,37 +24,29 @@ namespace FBS_CoreApi.Repositories
             _httpContextAccessor = httpContextAccessor;
         }
 
-        public UserWithBookingsDto GetUserWithBookings(string userId)
+        public UserWithBookingsDto GetUserWithBookings()
         {
             try
             {
-                var authenticatedUserId = _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
-
-                if (authenticatedUserId != userId)
-                {
-                    throw new UnauthorizedAccessException("You do not have permission to access this resource.");
-                }
+                var authenticatedUserId = _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
                 if (authenticatedUserId == null)
                 {
                     throw new UnauthorizedAccessException("Please login or register.");
                 }
 
-                var user = _context.Users.FirstOrDefault(u => u.Id == userId);
+                var user = _context.Users.FirstOrDefault(u => u.Id == authenticatedUserId);
 
                 if (user == null)
                 {
                     return null;
                 }
 
-
                 var userWithBookingsDto = new UserWithBookingsDto
                 {
-                    //     UserId = user.Id,
-                    //    UserName = user.UserName,
                     Email = user.Email,
                     Bookings = _context.Bookings
-                        .Where(b => b.UserId == userId)
+                        .Where(b => b.UserId == authenticatedUserId)
                         .Select(b => new BookingDTO
                         {
                             PassengerName = b.PassengerName,
@@ -72,8 +65,8 @@ namespace FBS_CoreApi.Repositories
             catch (Exception ex)
             {
                 throw new UnauthorizedAccessException("An error occurred while processing your request. Please try again later.");
-
             }
         }
+
     }
 }

@@ -1,6 +1,5 @@
 ﻿using FBS_CoreApi.Data;
 using FBS_CoreApi.DTOs;
-using FlightBooking.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace FBS_CoreApi.Repos

@@ -4,6 +4,7 @@ using FBS_CoreApi.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FBS_CoreApi.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230428132713_CabinAdded")]
+    partial class CabinAdded
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -155,14 +158,17 @@ namespace FBS_CoreApi.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("NoOfSeats")
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("Seats")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.HasIndex("FlightId");
 
-                    b.ToTable("Cabins");
+                    b.ToTable("CabinClass");
                 });
 
             modelBuilder.Entity("Flight", b =>
@@ -354,7 +360,7 @@ namespace FBS_CoreApi.Migrations
             modelBuilder.Entity("FBS_CoreApi.Models.CabinClass", b =>
                 {
                     b.HasOne("Flight", null)
-                        .WithMany("CabinClasses")
+                        .WithMany("Cabins")
                         .HasForeignKey("FlightId");
                 });
 
@@ -411,7 +417,7 @@ namespace FBS_CoreApi.Migrations
 
             modelBuilder.Entity("Flight", b =>
                 {
-                    b.Navigation("CabinClasses");
+                    b.Navigation("Cabins");
                 });
 #pragma warning restore 612, 618
         }

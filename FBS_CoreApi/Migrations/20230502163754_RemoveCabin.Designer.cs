@@ -4,6 +4,7 @@ using FBS_CoreApi.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FBS_CoreApi.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230502163754_RemoveCabin")]
+    partial class RemoveCabin
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -140,31 +143,6 @@ namespace FBS_CoreApi.Migrations
                     b.ToTable("Bookings");
                 });
 
-            modelBuilder.Entity("FBS_CoreApi.Models.CabinClass", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int?>("FlightId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("NoOfSeats")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("FlightId");
-
-                    b.ToTable("Cabins");
-                });
-
             modelBuilder.Entity("Flight", b =>
                 {
                     b.Property<int>("Id")
@@ -190,6 +168,9 @@ namespace FBS_CoreApi.Migrations
                     b.Property<string>("FlightNumber")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("NoOfSeatsAvailable")
+                        .HasColumnType("int");
 
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
@@ -351,13 +332,6 @@ namespace FBS_CoreApi.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("FBS_CoreApi.Models.CabinClass", b =>
-                {
-                    b.HasOne("Flight", null)
-                        .WithMany("CabinClasses")
-                        .HasForeignKey("FlightId");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -407,11 +381,6 @@ namespace FBS_CoreApi.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("Flight", b =>
-                {
-                    b.Navigation("CabinClasses");
                 });
 #pragma warning restore 612, 618
         }

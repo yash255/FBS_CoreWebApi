@@ -15,12 +15,12 @@ namespace FBS_CoreApi.Controllers
             _userRepo = userRepo;
         }
 
-        [HttpGet("{userId}/bookings")]
-        public IActionResult GetUserWithBookings(string userId)
+        [HttpGet("bookings")]
+        public IActionResult GetUserWithBookings()
         {
             try
             {
-                var userWithBookingsDto = _userRepo.GetUserWithBookings(userId);
+                var userWithBookingsDto = _userRepo.GetUserWithBookings();
                 return Ok(userWithBookingsDto);
             }
             catch (UnauthorizedAccessException ex)

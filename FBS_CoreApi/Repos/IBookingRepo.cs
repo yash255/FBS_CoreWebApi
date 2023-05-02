@@ -1,6 +1,5 @@
 ﻿using System.Net;
 using System.Net.Mail;
-using FlightBooking.Models;
 using Microsoft.EntityFrameworkCore;
 using FBS_CoreApi.DTOs;
 using FBS_CoreApi.Models;
@@ -28,6 +27,7 @@ namespace FBS_CoreApi.Repositories
         public async Task<BookFlightResult> BookFlight(int flightId, BookingDTO booking, string userId)
         {
             var flight = await _context.Flights
+                .Include(f => f.CabinClasses)
                 .FirstOrDefaultAsync(f => f.Id == flightId);
 
             if (flight == null)
@@ -39,15 +39,39 @@ namespace FBS_CoreApi.Repositories
             {
                 return new BookFlightResult(false, "Number of tickets must be at least 1");
             }
-            int availableSeats = flight.NoOfSeatsAvailable - await _context.Bookings.Where(b => b.FlightId == flight.Id).SumAsync(b => b.NoOfTicket);
-            if (booking.NoOfTicket > availableSeats)
+
+            if (booking.NoOfTicket > 10)
             {
-                return new BookFlightResult(false, $"Only {availableSeats} seats are available in this flight");
+                return new BookFlightResult(false, "You can book up to 10 tickets at a time");
             }
 
             // Calculate total price based on the number of tickets and flight price
             decimal totalPrice = flight.Price * booking.NoOfTicket;
 
+            if (booking.CabinClass == "Business")
+            {
+                totalPrice = flight.Price*booking.NoOfTicket*1.3m; // Increase the price by 10%
+                flight.CabinClasses.First(c => c.Name == "Business").NoOfSeats -= booking.NoOfTicket; // Decrease the number of available seats for the Business cabin
+            }
+            else if (booking.CabinClass == "First")
+            {
+                totalPrice = flight.Price * booking.NoOfTicket * 1.4m; // Increase the price by 20%
+                flight.CabinClasses.First(c => c.Name == "First").NoOfSeats -= booking.NoOfTicket; // Decrease the number of available seats for the First cabin
+            }
+            else if (booking.CabinClass == "Economy")
+            {
+                totalPrice = flight.Price * booking.NoOfTicket * 1.1m; // Increase the price by 30%
+                flight.CabinClasses.First(c => c.Name == "Economy").NoOfSeats -= booking.NoOfTicket; // Decrease the number of available seats for the Economy cabin
+            }
+            else if (booking.CabinClass == "Premium Economy")
+            {
+                totalPrice = flight.Price * booking.NoOfTicket * 1.2m; // Increase the price by 30%
+                flight.CabinClasses.First(c => c.Name == "Premium Economy").NoOfSeats -= booking.NoOfTicket; // Decrease the number of available seats for the Economy cabin
+            }
+            else
+            {
+                return new BookFlightResult(false, "Invalid cabin class selected");
+            }
 
             // Create a new Booking entity
             var newBooking = new Booking
@@ -64,14 +88,12 @@ namespace FBS_CoreApi.Repositories
                 UserId = userId
             };
 
-            flight.NoOfSeatsAvailable -= booking.NoOfTicket;
-
             // Add the new booking to the database
             _context.Bookings.Add(newBooking);
             await _context.SaveChangesAsync();
 
             // Send confirmation email to user
-            await SendConfirmationEmailAsync(flight, booking, totalPrice, "yashkhandelwalseb25@gmail.com");
+            await SendConfirmationEmailAsync(flight, booking, totalPrice, "");
 
             return new BookFlightResult(true, "");
         }
@@ -95,7 +117,7 @@ namespace FBS_CoreApi.Repositories
 
             // Send cancellation confirmation email to user
 
-            return new CancelBookingResult(true, "");
+            return new CancelBookingResult(true, "yashkhandelwalseb25@gmail.com");
         }
 
         private async Task SendConfirmationEmailAsync(Flight flight, BookingDTO booking, decimal totalPrice, string fromEmail)
@@ -128,7 +150,7 @@ namespace FBS_CoreApi.Repositories
                 var credential = new NetworkCredential
                 {
                     UserName = "yashkhandelwalseb25@gmail.com",
-                    Password = "jtoofeqwycubfygg"
+                    Password = ""
                 };
                 smtp.UseDefaultCredentials = false;
 
