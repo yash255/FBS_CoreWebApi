@@ -7,6 +7,8 @@ namespace FBS_CoreApi.Repos
     public interface ISearchRepo
     {
         Task<List<FlightDto>> GetFlightsAsync(string departureAirport, string arrivalAirport, DateTime departureTime);
+        Task<FlightDto> GetFlightByIdAsync(int flightId);
+
     }
 
     public class SearchRepo : ISearchRepo
@@ -21,6 +23,7 @@ namespace FBS_CoreApi.Repos
         public async Task<List<FlightDto>> GetFlightsAsync(string departureAirport, string arrivalAirport, DateTime departureTime)
         {
             var flights = await _dbContext.Flights
+                .Include(f => f.CabinClasses)
                 .Where(f => f.DepartureAirport == departureAirport
                             && f.ArrivalAirport == arrivalAirport
                             && f.DepartureTime.Date == departureTime.Date)
@@ -28,16 +31,52 @@ namespace FBS_CoreApi.Repos
 
             return flights.Select(flight => new FlightDto
             {
+                Id = flight.Id,
                 FlightNumber = flight.FlightNumber,
                 DepartureAirport = flight.DepartureAirport,
                 ArrivalAirport = flight.ArrivalAirport,
                 DepartureTime = flight.DepartureTime,
                 ArrivalTime = flight.ArrivalTime,
-                Price = flight.Price
+                Price = flight.Price,
+                Cabins = flight.CabinClasses.Select(cabin => new CabinClassDto
+                {
+                    Name = cabin.Name,
+                    NoOfSeats = cabin.NoOfSeats
+                }).ToList()
+
             }).ToList();
         }
 
-    }
+        public async Task<FlightDto> GetFlightByIdAsync(int flightId)
+        {
+            var flight = await _dbContext.Flights
+                .Include(f => f.CabinClasses)
+                .FirstOrDefaultAsync(f => f.Id == flightId);
+
+            if (flight == null)
+            {
+                return null; // Flight not found
+            }
+
+            return new FlightDto
+            {
+                Id = flight.Id,
+                FlightNumber = flight.FlightNumber,
+                DepartureAirport = flight.DepartureAirport,
+                ArrivalAirport = flight.ArrivalAirport,
+                DepartureTime = flight.DepartureTime,
+                ArrivalTime = flight.ArrivalTime,
+                Price = flight.Price,
+                Cabins = flight.CabinClasses.Select(cabin => new CabinClassDto
+                {
+                    Name = cabin.Name,
+                    NoOfSeats = cabin.NoOfSeats
+                }).ToList()
+            };
+        }
+    
+
+}
 
 
 

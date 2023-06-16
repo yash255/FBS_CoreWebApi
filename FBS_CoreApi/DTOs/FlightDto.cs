@@ -6,6 +6,7 @@ namespace FBS_CoreApi.DTOs
 {
     public class FlightDto
     {
+        public int Id { get; set; }
         public string FlightNumber { get; set; }
 
         public string DepartureAirport { get; set; }

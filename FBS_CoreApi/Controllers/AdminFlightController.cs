@@ -28,7 +28,21 @@ namespace FlightBooking.Controllers
             return Ok(flights);
         }
 
-        [HttpGet("flights/{number}")]
+
+        [HttpGet("flights/{id}")]
+        public async Task<ActionResult<Flight>> GetFlightById(int id)
+        {
+            var flight = await _adminRepo.GetFlightById(id);
+            if (flight == null)
+            {
+                return NotFound();
+            }
+            return Ok(flight);
+        }
+
+
+
+        [HttpGet("flights/number/{number}")]
         public async Task<ActionResult<Flight>> GetFlightByNumber(string number)
         {
             var flight = await _adminRepo.GetFlightByNumber(number);

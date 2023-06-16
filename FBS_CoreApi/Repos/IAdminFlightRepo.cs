@@ -19,6 +19,7 @@ namespace FlightBooking.Repos
         Task UpdateFlight(int id, AdminFlightDto flightDto);
 
         Task DeleteFlight(int id);
+        Task<Flight> GetFlightById(int id);
     }
 
 
@@ -41,6 +42,13 @@ namespace FlightBooking.Repos
             return await _context.Flights
                 .Include(flight => flight.CabinClasses)
                 .ToListAsync();
+        }
+
+        public async Task<Flight> GetFlightById(int id)
+        {
+            return await _context.Flights
+                .Include(f => f.CabinClasses)
+                .FirstOrDefaultAsync(f => f.Id == id);
         }
 
 
@@ -157,8 +165,7 @@ namespace FlightBooking.Repos
 
             var updatedCabins = new List<CabinClass>();
 
-            // update existing cabin classes or add new ones
-           // var cabins = new List<CabinClass>();
+            
 
             foreach (var cabinDto in flightDto.CabinClasses)
             {
@@ -212,8 +219,17 @@ namespace FlightBooking.Repos
                 throw new ArgumentException("Flight not found");
             }
 
+            // Delete all related Cabins
+            var cabins = await _context.Cabins.Where(c => c.FlightId == id).ToListAsync();
+            foreach (var cabin in cabins)
+            {
+                _context.Cabins.Remove(cabin);
+            }
+
+            // Delete the Flight entity
             _context.Flights.Remove(flight);
             await _context.SaveChangesAsync();
         }
+
     }
 }

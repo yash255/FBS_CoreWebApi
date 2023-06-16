@@ -4,6 +4,8 @@ namespace FBS_CoreApi.DTOs
 {
     public class BookingDTO
     {
+        public int Id { get; set; }
+
         [Required]
         public string PassengerName { get; set; }
 

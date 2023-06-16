@@ -29,5 +29,18 @@ namespace FBS_CoreApi.Controllers
             }
             return flights;
         }
+
+        [HttpGet("Flight/{flightId}")]
+        public async Task<ActionResult<FlightDto>> GetFlightById(int flightId)
+        {
+            var flight = await _searchRepo.GetFlightByIdAsync(flightId);
+
+            if (flight == null)
+            {
+                return NotFound(); // Flight not found
+            }
+
+            return Ok(flight);
+        }
     }
 }
