@@ -1,0 +1,60 @@
+
+<app-navbar></app-navbar>
+<section class="vh-100" style="background-image: url('/assets/images/flightblurbg.webp');">
+  <div class="container py-5 h-100">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+        <div class="card shadow-2-strong" style="border-radius: 1rem;">
+          <div class="card-body p-5 text-center">
+            <div class="mb-3">
+  
+    <h1>Update Flight</h1>
+    <hr>
+<form (submit)="updateFlight()"><br>
+  <div>
+    <label style="margin-right: 15px;">Flight Number </label>
+    <input type="text" class="form-control" id="flightNumber" [(ngModel)]="flight.flightNumber" name="flightNumber" required>
+  </div><br>
+
+  <div>
+    <label style="margin-right: 15px;">Departure Airport </label>
+    <input type="text" class="form-control" id="departureAirport" [(ngModel)]="flight.departureAirport" name="departureAirport" required>
+  </div><br>
+
+  <div>
+    <label style="margin-right: 15px;">Arrival Airport </label>
+    <input type="text" class="form-control" id="arrivalAirport" [(ngModel)]="flight.arrivalAirport" name="arrivalAirport" required>
+  </div><br>
+
+  <div>
+    <label style="margin-right: 15px;">Departure Time </label>
+    <input type="datetime-local" class="form-control" id="departureTime" [(ngModel)]="flight.departureTime" name="departureTime" required>
+  </div><br>
+
+  <div>
+    <label style="margin-right: 15px;">Arrival Time </label>
+    <input type="datetime-local" class="form-control" id="arrivalTime" [(ngModel)]="flight.arrivalTime" name="arrivalTime" required>
+  </div><br>
+
+  <div>
+    <label style="margin-right: 15px;">Ticket Price </label>
+    <input type="number" class="form-control" id="price" [(ngModel)]="flight.price" name="price" required>
+  </div><br>
+
+
+  
+      
+      
+
+  <button type="submit" class="form-control"  style="background-color: rgb(37, 86, 164); color: white;  border-radius: 5px;">Update</button>
+</form>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+

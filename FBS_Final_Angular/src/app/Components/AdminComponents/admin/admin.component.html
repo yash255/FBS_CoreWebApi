@@ -1,0 +1,46 @@
+<app-navbar></app-navbar>
+
+<section class="vh-100" style="background-image: url('/assets/images/flightblurbg.webp');">
+  <div class="container py-5 h-100">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div *ngIf="flights">
+        <div class="container my-5 center bg-light">
+          <br>
+          <h1>Flight Management</h1>
+          <hr>
+          <button (click)="registeradmin()" style="background-color: rgb(37, 86, 164); color: white; border-radius: 5px; margin-right: 10px;">Register Admin</button>
+          <button (click)="createFlight()" style="background-color: rgb(37, 86, 164); color: white; border-radius: 5px; margin-right: 10px;">Create Flight</button>
+          <table class="table table-striped table-bordered my-5">
+            <thead>
+              <tr>
+                <th>Flight Number</th>
+                <th>Departure Airport</th>
+                <th>Arrival Airport</th>
+                <th>Departure Time</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let flight of flights">
+                <td>{{ flight.flightNumber }}</td>
+                <td>{{ flight.departureAirport }}</td>
+                <td>{{ flight.arrivalAirport }}</td>
+                <td>{{ flight.departureTime}}</td>
+                <td>
+                  <button (click)="updateflight(flight.id)"  style="background-color: rgb(37, 164, 63); color: white; border-radius: 5px; margin-right: 10px;">Edit</button>
+                  <button (click)="deleteFlight(flight.id)" style="background-color: rgb(190, 53, 53); color: white; border-radius: 5px; margin-right: 10px;">Delete</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div *ngIf="errorMessage" class="alert alert-danger">
+        {{ errorMessage }}
+      </div>
+
+    </div>
+
+  </div>
+</section>

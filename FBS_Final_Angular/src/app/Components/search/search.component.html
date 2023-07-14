@@ -1,0 +1,55 @@
+<app-navbar></app-navbar>
+
+<section class="vh-100" style="background-image: url('/assets/images/flightblurbg.webp');">
+  <div class="container py-5 h-100">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="search">
+        <h2>Flight Search</h2>
+
+        <form class="search-form" (ngSubmit)="searchFlights()">
+          <div class="form-group">
+            <label for="departureAirport">Departure Airport</label>
+            <input type="text" id="departureAirport" name="departureAirport" [(ngModel)]="search.departureAirport" required>
+          </div>
+          <div class="form-group">
+            <label for="arrivalAirport">Arrival Airport</label>
+            <input type="text" id="arrivalAirport" name="arrivalAirport" [(ngModel)]="search.arrivalAirport" required>
+          </div>
+          <div class="form-group">
+            <label for="departureTime">Departure Time</label>
+            <input type="date" id="departureTime" name="departureTime" [(ngModel)]="search.departureTime" required>
+          </div>
+
+          <button type="submit" class="btn btn-primary">Search Flights</button>
+        </form>
+
+        <div *ngIf="flights.length > 0">
+          <h3>Available Flights</h3>
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>Flight Number</th>
+                <th>Route</th>
+                <th>Departure Time</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let flight of flights">
+                <td>{{ flight.flightNumber }}</td>
+                <td>{{ flight.departureAirport }} - {{ flight.arrivalAirport }}</td>
+                <td>{{ flight.departureTime | date:'medium' }}</td>
+                <td>
+                  <button (click)="bookFlight(flight.id)" class="btn btn-success">Book</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        
+
+        <p class="error-message" *ngIf="errorMessage">{{ errorMessage }}</p>
+      </div>
+    </div>
+  </div>
+</section>

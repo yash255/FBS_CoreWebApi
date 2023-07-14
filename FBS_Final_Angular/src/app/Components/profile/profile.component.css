@@ -1,0 +1,19 @@
+.table-white {
+    background-color: white;
+  }
+  
+  .table-white th,
+  .table-white td {
+    background-color: white;
+  }
+
+  tbody{
+    background-color: white;
+
+
+
+  }
+  
+  h1{
+    color: antiquewhite;
+  }

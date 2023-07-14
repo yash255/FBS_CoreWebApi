@@ -8,7 +8,6 @@ namespace FlightBooking.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    [Authorize(Roles ="Admin")]
     public class AdminController : ControllerBase
     {
         private readonly IAdminRepo _adminRepo;
@@ -21,6 +20,7 @@ namespace FlightBooking.Controllers
         }
 
         [HttpGet("flights")]
+        [Authorize(Roles = "Admin")]
 
         public async Task<ActionResult<IEnumerable<Flight>>> GetFlights()
         {
@@ -43,6 +43,8 @@ namespace FlightBooking.Controllers
 
 
         [HttpGet("flights/number/{number}")]
+        [Authorize(Roles = "Admin")]
+
         public async Task<ActionResult<Flight>> GetFlightByNumber(string number)
         {
             var flight = await _adminRepo.GetFlightByNumber(number);
@@ -54,6 +56,8 @@ namespace FlightBooking.Controllers
         }
 
         [HttpPost("flights")]
+        [Authorize(Roles = "Admin")]
+
         public async Task<ActionResult<Flight>> CreateFlight(FlightDto flightDto)
         {
             var flight = await _adminRepo.CreateFlight(flightDto);
@@ -61,6 +65,8 @@ namespace FlightBooking.Controllers
         }
 
         [HttpPut("flights/{id}")]
+        [Authorize(Roles = "Admin")]
+
         public async Task<ActionResult> UpdateFlight(int id, AdminFlightDto flightDto)
         {
             await _adminRepo.UpdateFlight(id, flightDto);
@@ -68,6 +74,8 @@ namespace FlightBooking.Controllers
         }
 
         [HttpDelete("flights/{id}")]
+        [Authorize(Roles = "Admin")]
+
         public async Task<ActionResult> DeleteFlight(int id)
         {
             await _adminRepo.DeleteFlight(id);

@@ -1,0 +1,21 @@
+body{
+    background-color: #8383d5;
+    background: linear-gradient(to top, #8383d5, #191c20 90%);
+    background-repeat: no-repeat;
+}
+
+
+/* .home-h1{
+    font-size:50px;
+} */
+
+
+
+.mat-h1, .mat-headline-5, .mat-typography .mat-h1, .mat-typography .mat-headline-5, .mat-typography h1 {
+    font-size: 24px;
+    font-weight: 400;
+    /* line-height: 32px; */
+    font-family: Roboto, sans-serif;
+    letter-spacing: normal;
+    margin: 0 0 16px;
+}

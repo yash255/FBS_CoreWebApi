@@ -1,0 +1,38 @@
+<app-navbar></app-navbar>
+<section class="vh-100" style="background-image: url('/assets/images/flightblurbg.webp');">
+    <div class="container py-5 h-100">
+      <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+          <div class="card shadow-2-strong" style="border-radius: 1rem;">
+            <div class="card-body p-5 text-center">
+  
+              <h1 class="mb-5">Sign Up</h1>
+  
+              <div class="form-outline mb-4">
+                <input type="email" id="typeEmailX-2" class="form-control form-control-lg" placeholder="Email" [(ngModel)]="email" required pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}" />
+                <label class="form-label" for="typeEmailX-2"></label>
+              </div>
+  
+              <div class="form-outline mb-4">
+                <input type="password" id="typePasswordX-2" class="form-control form-control-lg" placeholder="Password" [(ngModel)]="password" required pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$" />
+                <label class="form-label" for="typePasswordX-2"></label>
+              </div>
+  
+              <div class="form-outline mb-4">
+                <input type="password" id="typePasswordX-3" class="form-control form-control-lg" placeholder="Re-Enter Password" [(ngModel)]="confirmPassword" required />
+                <label class="form-label" for="typePasswordX-3"></label>
+              </div>
+  
+              <p *ngIf="passwordsMatch && !emailValid" class="text-danger">Please enter a valid email address.</p>
+              <p *ngIf="!passwordsMatch && emailValid" class="text-danger">Passwords do not match.</p>
+  
+              <button class="btn btn-primary btn-lg btn-block" type="submit" (click)="register()">Register</button>
+              &nbsp;
+  
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  

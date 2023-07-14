@@ -28,5 +28,25 @@ namespace FBS_CoreApi.Controllers
                 return StatusCode(403, new { Message = ex.Message });
             }
         }
+
+        [HttpDelete("bookings/{bookingId}")]
+        public IActionResult CancelBooking(int bookingId)
+        {
+            try
+            {
+                var isCancelled = _userRepo.CancelBooking(bookingId);
+
+                if (isCancelled)
+                {
+                    return Ok(new { Message = "Booking cancelled successfully" });
+                }
+
+                return NotFound(new { Message = "Booking not found" });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { Message = ex.Message });
+            }
+        }
     }
 }

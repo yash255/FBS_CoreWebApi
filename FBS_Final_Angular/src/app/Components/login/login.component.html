@@ -1,0 +1,72 @@
+<app-navbar></app-navbar>
+<section class="vh-100" style="background-image: url('/assets/images/flightblurbg.webp');">
+  <div class="container py-5 h-100">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+        <div class="card shadow-2-strong" style="border-radius: 1rem;">
+          <div class="card-body p-5 text-center">
+
+            <h1 class="mb-5">Log In</h1>
+
+            <form [formGroup]="loginForm" (ngSubmit)="login()">
+
+              <div class="form-outline mb-4">
+                <input type="email" id="typeEmailX-2" class="form-control form-control-lg" placeholder="Username" formControlName="email" />
+                <label class="form-label" for="typeEmailX-2"></label>
+              </div>
+
+              <div class="form-outline mb-4">
+                <input type="password" id="typePasswordX-2" class="form-control form-control-lg" placeholder="Password" formControlName="password" />
+                <label class="form-label" for="typePasswordX-2"></label>
+              </div>
+
+              <button class="btn btn-primary btn-lg btn-block" type="submit" [disabled]="loginForm.invalid">Login</button>
+              &nbsp;
+
+              <div class="text-center pt-4 text-muted">Don't have an account <a id="forget" routerLink="/signup">Sign Up</a></div>
+
+            </form>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+<!-- <app-navbar></app-navbar>
+<section class="vh-100" style="background-color: #1f3e77;">
+    <div class="container py-5 h-100">
+      <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+          <div class="card shadow-2-strong" style="border-radius: 1rem;">
+            <div class="card-body p-5 text-center">
+  
+              <h1 class="mb-5">Log In</h1>
+  
+              <div class="form-outline mb-4">
+                <input type="email" id="typeEmailX-2" class="form-control form-control-lg" placeholder="Username" [(ngModel)]="email" />
+                <label class="form-label" for="typeEmailX-2"></label>
+                <div *ngIf="emailInvalid" class="text-danger">Invalid email address.</div>
+              </div>
+  
+              <div class="form-outline mb-4">
+                <input type="password" id="typePasswordX-2" class="form-control form-control-lg" placeholder="Password" [(ngModel)]="password" />
+                <label class="form-label" for="typePasswordX-2"></label>
+                <div *ngIf="passwordInvalid" class="text-danger">Password should contain at least one capital letter and one special character.</div>
+              </div>
+  
+              <button class="btn btn-primary btn-lg btn-block" type="submit" (click)="login()">Login</button>
+              &nbsp;
+  
+              <div class="text-center pt-4 text-muted">Don't Have an account <a id="forget" routerLink="/signup">Sign Up</a></div>
+  
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+   -->

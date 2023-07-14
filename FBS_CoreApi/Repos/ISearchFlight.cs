@@ -7,7 +7,7 @@ namespace FBS_CoreApi.Repos
     public interface ISearchRepo
     {
         Task<List<FlightDto>> GetFlightsAsync(string departureAirport, string arrivalAirport, DateTime departureTime);
-        Task<FlightDto> GetFlightByIdAsync(int flightId);
+      //  Task<FlightDto> GetFlightByIdAsync(int flightId);
 
     }
 
@@ -47,33 +47,7 @@ namespace FBS_CoreApi.Repos
             }).ToList();
         }
 
-        public async Task<FlightDto> GetFlightByIdAsync(int flightId)
-        {
-            var flight = await _dbContext.Flights
-                .Include(f => f.CabinClasses)
-                .FirstOrDefaultAsync(f => f.Id == flightId);
-
-            if (flight == null)
-            {
-                return null; // Flight not found
-            }
-
-            return new FlightDto
-            {
-                Id = flight.Id,
-                FlightNumber = flight.FlightNumber,
-                DepartureAirport = flight.DepartureAirport,
-                ArrivalAirport = flight.ArrivalAirport,
-                DepartureTime = flight.DepartureTime,
-                ArrivalTime = flight.ArrivalTime,
-                Price = flight.Price,
-                Cabins = flight.CabinClasses.Select(cabin => new CabinClassDto
-                {
-                    Name = cabin.Name,
-                    NoOfSeats = cabin.NoOfSeats
-                }).ToList()
-            };
-        }
+      
     
 
 }

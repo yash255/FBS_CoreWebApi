@@ -14,14 +14,7 @@ var builder = WebApplication.CreateBuilder(args);
 ConfigurationManager configuration = builder.Configuration;
 
 
-/*builder.Services.AddCors(option =>
-{
-    option.AddPolicy("MyPolicy", builder =>
-    {
-        builder.AllowAnyOrigin().AllowAnyHeader();
-    });
 
-});*/
 
 
 builder.Services.AddCors(options =>

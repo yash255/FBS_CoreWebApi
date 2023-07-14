@@ -1,0 +1,82 @@
+
+<app-navbar></app-navbar>
+<section class="vh-100" style="background-image: url('/assets/images/flightblurbg.webp');">
+  <div class="container py-5 h-100">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+        <div class="card shadow-2-strong" style="border-radius: 1rem;">
+          <div class="card-body p-5 text-center">
+            <div class="mb-3">
+  
+    <h1>Create New Flight</h1>
+    <hr>
+<form (submit)="createFlight()"><br>
+  <div>
+    <label style="margin-right: 15px;">Flight Number </label>
+    <input type="text" [(ngModel)]="flightDto.flightNumber" class="form-control" name="flightNumber">
+  </div><br>
+
+  <div>
+    <label style="margin-right: 15px;">Departure Airport </label>
+    <input type="text" [(ngModel)]="flightDto.departureAirport"class="form-control" name="departureAirport">
+  </div><br>
+
+  <div>
+    <label style="margin-right: 15px;">Arrival Airport </label>
+    <input type="text" [(ngModel)]="flightDto.arrivalAirport"class="form-control" name="arrivalAirport">
+  </div><br>
+
+  <div>
+    <label style="margin-right: 15px;">Departure Time </label>
+    <input type="datetime-local" [(ngModel)]="flightDto.departureTime" class="form-control" name="departureTime">
+  </div><br>
+
+  <div>
+    <label style="margin-right: 15px;">Arrival Time </label>
+    <input type="datetime-local" [(ngModel)]="flightDto.arrivalTime" class="form-control"  name="arrivalTime">
+  </div><br>
+
+  <div>
+    <label style="margin-right: 15px;">Ticket Price </label>
+    <input type="number" [(ngModel)]="flightDto.price" class="form-control" name="price">
+  </div><br>
+
+
+  <div>
+    <div *ngFor="let cabin of flightDto.cabins; let i=index">
+      <hr>
+
+      <h2>Cabin {{i+1}}</h2>
+      <div>
+        <label style="margin-right: 15px;">Cabin Name </label>
+        <select id="cabinClass" name="cabinClass" class="form-control" [(ngModel)]="cabin.name" required>
+          <option value="Economy">Economy</option>
+          <option value="Business">Business</option>
+          <option value="First">First</option>
+          <option value="Premium Economy">Premium Economy</option>
+        </select>      </div><br>
+      
+      <div>
+        <label style="margin-right: 15px;">No. of Seats </label>
+        <input type="number" [(ngModel)]="cabin.noOfSeats" class="form-control" name="cabins[{{i}}].noOfSeats">
+      </div><br>
+
+      <button type="button" class="form-control" (click)="removeCabin(i)" style="background-color: rgb(190, 53, 53); color: white; border-radius: 5px;">Remove Cabin</button>
+    </div><br>
+  </div>
+
+  <div>
+    <button type="button" class="form-control" (click)="addCabin()" style="background-color: rgb(37, 164, 63); color: white; border-radius: 5px;">Add Cabin</button>
+  </div><br>
+
+  <button type="submit" class="form-control"  style="background-color: rgb(37, 86, 164); color: white;  border-radius: 5px;">Create</button>
+</form>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+

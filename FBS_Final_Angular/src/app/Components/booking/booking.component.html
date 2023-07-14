@@ -1,0 +1,56 @@
+<app-navbar></app-navbar>
+
+<section class="vh-100" style="background-image: url('/assets/images/flightblurbg.webp');">
+  <div class="container py-5 h-100">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="booking">
+        <h2>Flight Booking</h2>
+
+        <form class="booking-form" (ngSubmit)="bookFlight()">
+          <div class="form-group">
+            <label for="passengerName">Passenger Name</label>
+            <input type="text" id="passengerName" name="passengerName" class="form-control" [(ngModel)]="booking.passengerName" required>
+          </div>
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" class="form-control" [(ngModel)]="booking.email" required>
+          </div>
+          <div class="form-group">
+            <label for="phoneNumber">Phone Number</label>
+            <input type="text" id="phoneNumber" name="phoneNumber" class="form-control" [(ngModel)]="booking.phoneNumber" required pattern="^[0-9]{10}$">
+            <!-- <small *ngIf="phoneNumber.invalid">Invalid Phone Number</small> -->
+          </div>
+          <div class="form-group">
+            <label for="age">Age</label>
+            <input type="number" id="age" name="age" class="form-control" [(ngModel)]="booking.age" required min="1" max="120">
+          </div>
+          <div class="form-group">
+            <label for="gender">Gender</label>
+            <select id="gender" name="gender" class="form-control" [(ngModel)]="booking.gender" required>
+              <option value="male">Male</option>
+              <option value="female">Female</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="cabinClass">Cabin Class</label>
+            <select id="cabinClass" name="cabinClass" class="form-control" [(ngModel)]="booking.cabinClass" required>
+              <option value="Economy">Economy</option>
+              <option value="Business">Business</option>
+              <option value="First">First</option>
+              <option value="Premium Economy">Premium Economy</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="noOfTicket">Number of Tickets</label>
+            <input type="number" id="noOfTicket" name="noOfTicket" class="form-control" [(ngModel)]="booking.noOfTicket" required>
+          </div>
+
+          <button type="submit" class="btn btn-primary">Book Flight</button>
+        </form>
+
+        <p class="error-message" *ngIf="errorMessage">{{ errorMessage }}</p>
+      </div>
+    </div>
+  </div>
+</section>

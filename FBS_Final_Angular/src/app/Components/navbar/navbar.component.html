@@ -1,0 +1,42 @@
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container">
+    <a class="navbar-brand" routerLink="/home">Flyindia</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarId"
+      aria-controls="navbarId" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarId">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link" aria-current="page" routerLink="/home">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" aria-current="page" routerLink="/search">Search</a>
+        </li>
+       
+
+      </ul>
+      <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+        <li *ngIf="!loggedIn" class="nav-item">
+          <a class="nav-link btn btn-purple" aria-current="page" routerLink="/signup">Register</a>
+        </li>
+        <li *ngIf="!loggedIn" class="nav-item">
+          <a class="nav-link btn btn-purple" aria-current="page" routerLink="/login">Login</a>
+        </li>
+        <li *ngIf="loggedIn">
+          <button class="nav-link btn btn-purple" aria-current="page" routerLink="/profile">MyProfile</button>
+          
+        </li>
+        <li *ngIf="loggedIn">
+          <button class="nav-link btn btn-purple" aria-current="page" (click)="logout()">Logout</button>
+          
+        </li>
+        <li *ngIf="AdminLoggedIn" class="nav-item">
+          <a class="nav-link" aria-current="page" routerLink="/admin">Admin</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
