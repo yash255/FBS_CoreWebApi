@@ -99,7 +99,7 @@ namespace FBS_CoreApi.Repositories
             await _context.SaveChangesAsync();
 
             // Send confirmation email to user
-            await SendConfirmationEmailAsync(flight, booking, totalPrice, "yashkhandelwalseb25@gmail.com");
+            await SendConfirmationEmailAsync(flight, booking, totalPrice, "email");
 
             return new BookFlightResult(true, "");
         }
@@ -163,8 +163,8 @@ namespace FBS_CoreApi.Repositories
             {
                 var credential = new NetworkCredential
                 {
-                    UserName = "yashkhandelwalseb25@gmail.com",
-                    Password = "ocljjigjdoxujfwp"
+                    UserName = "email",
+                    Password = "password"
                 };
                 smtp.UseDefaultCredentials = false;
 
@@ -203,14 +203,14 @@ namespace FBS_CoreApi.Repositories
 
             message.IsBodyHtml = true;
             message.Body = bodyBuilder.ToString();
-            message.From = new MailAddress("yashkhandelwalseb25@gmail.com");
+            message.From = new MailAddress("email");
 
             using (var smtp = new SmtpClient())
             {
                 var credential = new NetworkCredential
                 {
-                    UserName = "yashkhandelwalseb25@gmail.com",
-                    Password = "ocljjigjdoxujfwp"
+                    UserName = "email",
+                    Password = "password"
                 };
                 smtp.UseDefaultCredentials = false;
 
